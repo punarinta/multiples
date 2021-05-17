@@ -51,8 +51,6 @@ function quit (errMsg) {
 }
 
 function shutdown () {
-  fs.closeSync(outFD)
-
   process.exit(0)
 }
 
@@ -210,9 +208,7 @@ if (fs.existsSync(outFileName)) {
   quit('Output file already exists. Program will be stopped to avoid its corruption.')
 }
 
-const
-  outFD = fs.openSync(outFileName, 'w'),
-  reader = rl.createInterface({ input: fs.createReadStream(inFileName) })
+const reader = rl.createInterface({ input: fs.createReadStream(inFileName) })
 
 reader.on('line', handleNextLine)
 reader.on('close', shutdown)
